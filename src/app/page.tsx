@@ -129,12 +129,17 @@ export default function HomePage() {
         )}
 
         {!loading && !error && tokens.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-4xl mb-3">🔍</div>
-            <p className="text-gray-500">No B20 tokens deployed on {network} yet.</p>
-            <p className="text-gray-600 text-sm mt-1">
-              B20 goes live on Sepolia June 18 · Mainnet June 25, 2026
+          <div className="text-center py-16">
+            <div className="text-5xl mb-4">⏳</div>
+            <h3 className="text-white font-semibold text-lg mb-2">No B20 tokens yet</h3>
+            <p className="text-gray-500 max-w-md mx-auto mb-4">
+              The B20 factory precompile activates with the Beryl hardfork.
+              No tokens can be deployed until the hardfork goes live.
             </p>
+            <div className="inline-flex flex-col items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-xl px-6 py-4">
+              <span className="text-blue-400 font-semibold">🚀 Mainnet launch: June 25, 2026</span>
+              <span className="text-gray-500 text-sm">This explorer will populate automatically once Beryl activates</span>
+            </div>
           </div>
         )}
 
