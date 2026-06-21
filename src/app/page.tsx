@@ -47,7 +47,6 @@ export default function HomePage() {
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     if (!search.trim()) return;
-    // Kalau input adalah address, navigate ke token page
     if (search.startsWith("0x") && search.length === 42) {
       window.location.href = `/token/${search}`;
     }
@@ -65,13 +64,13 @@ export default function HomePage() {
           <span className="text-blue-400">B20</span> Token Explorer
         </h1>
         <p className="text-gray-400 text-lg max-w-xl mx-auto">
-          Explore Base's native token standard — ERC-20 implemented as Rust precompiles with built-in compliance toolkit.
+          Track B20 tokens on Base — the native token standard from the Beryl hardfork.
         </p>
 
         {/* Beryl Launch Banner */}
         <div className="mt-6 inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-2 text-sm text-blue-400">
           <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-          Beryl Hardfork — Mainnet aktif 25 Juni 2026 · Sepolia live sekarang
+          Beryl Hardfork · Mainnet June 25, 2026 · Sepolia live now
         </div>
       </div>
 
@@ -83,7 +82,7 @@ export default function HomePage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Masukkan token address (0x...)"
+            placeholder="Paste token address (0x...)"
             className="w-full bg-gray-900 border border-gray-700 rounded-xl pl-12 pr-4 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
           />
           <button
@@ -113,13 +112,13 @@ export default function HomePage() {
       {/* Token List */}
       <div>
         <h2 className="text-lg font-semibold text-gray-300 mb-4">
-          Recent B20 Deployments
+          Recent Deployments
         </h2>
 
         {loading && (
           <div className="text-center py-12 text-gray-500">
             <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mx-auto mb-3" />
-            Fetching B20 events dari chain...
+            Loading B20 events from chain...
           </div>
         )}
 
@@ -132,9 +131,9 @@ export default function HomePage() {
         {!loading && !error && tokens.length === 0 && (
           <div className="text-center py-12">
             <div className="text-4xl mb-3">🔍</div>
-            <p className="text-gray-500">Belum ada B20 token di-deploy di {network}.</p>
+            <p className="text-gray-500">No B20 tokens deployed on {network} yet.</p>
             <p className="text-gray-600 text-sm mt-1">
-              B20 akan aktif di Sepolia 18 Juni · Mainnet 25 Juni 2026
+              B20 goes live on Sepolia June 18 · Mainnet June 25, 2026
             </p>
           </div>
         )}
@@ -168,22 +167,14 @@ export default function HomePage() {
                       Deployer: <span className="font-mono">{shortenAddress(event.data.deployer)}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <a
-                      href={`/token/${event.data.token}`}
-                      className="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-xs transition-colors"
-                    >
-                      Detail
-                    </a>
-                    <a
-                      href={`${explorerBase}/tx/${event.txHash}`}
-                      target="_blank"
-                      rel="noopener"
-                      className="text-gray-500 hover:text-gray-300 transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
+                  <a
+                    href={`${explorerBase}/tx/${event.txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-blue-400 transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
             ))}
@@ -191,32 +182,15 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* Info Cards */}
-      <div className="mt-12 grid grid-cols-2 gap-4">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-          <h3 className="font-semibold text-gray-200 mb-2">🦀 Rust Precompile</h3>
-          <p className="text-sm text-gray-500">
-            B20 bukan smart contract EVM biasa — diimplementasikan sebagai Rust precompile. Lebih cepat, lebih murah.
-          </p>
-        </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-          <h3 className="font-semibold text-gray-200 mb-2">🛡️ Built-in Compliance</h3>
-          <p className="text-sm text-gray-500">
-            Transfer policies, freeze-and-seize, role-based access, supply cap — semuanya native di level protokol.
-          </p>
-        </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-          <h3 className="font-semibold text-gray-200 mb-2">📄 ERC-20 Compatible</h3>
-          <p className="text-sm text-gray-500">
-            Full selector parity dengan ERC-20. Tooling existing (Etherscan, Uniswap, dsb.) jalan tanpa modifikasi.
-          </p>
-        </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-          <h3 className="font-semibold text-gray-200 mb-2">🏭 Deterministik</h3>
-          <p className="text-sm text-gray-500">
-            Address B20 deterministik dan encode varian langsung. Bisa detect Asset vs Stablecoin tanpa RPC call.
-          </p>
-        </div>
+      {/* Footer */}
+      <div className="mt-16 pt-8 border-t border-gray-800 text-center text-gray-600 text-sm">
+        <p>
+          Built with {"<"}3 by{" "}"}
+          <a href="https://github.com/NeuroFade" className="text-blue-400 hover:underline mx-1">
+            NeuroFade
+          </a>
+          · Powered by Base
+        </p>
       </div>
     </div>
   );
