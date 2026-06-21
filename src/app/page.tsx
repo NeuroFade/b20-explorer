@@ -167,14 +167,28 @@ export default function HomePage() {
                       Deployer: <span className="font-mono">{shortenAddress(event.data.deployer)}</span>
                     </div>
                   </div>
-                  <a
-                    href={`${explorerBase}/tx/${event.txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-500 hover:text-blue-400 transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`New B20 ${event.data.variant} token on Base: ${event.data.token} — explore at https://b20-explorer.vercel.app/token/${event.data.token} #B20 #Base #Beryl`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Share on Twitter"
+                      className="text-gray-500 hover:text-sky-400 transition-colors"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.763l7.737-8.835L1.254 2.25H8.08l4.254 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </a>
+                    <a
+                      href={`${explorerBase}/tx/${event.txHash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View on Basescan"
+                      className="text-gray-500 hover:text-blue-400 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
