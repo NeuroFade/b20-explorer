@@ -185,7 +185,7 @@ export default function HomePage() {
       {/* Footer */}
       <div className="mt-16 pt-8 border-t border-gray-800 text-center text-gray-600 text-sm">
         <p>
-          Built with {"<"}3 by{" "}"}
+          Built with {"<"}3 by{" "}
           <a href="https://github.com/NeuroFade" className="text-blue-400 hover:underline mx-1">
             NeuroFade
           </a>
