@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { ExternalLink, Shield, ShieldAlert, Pause, CheckCircle, XCircle, ArrowLeft } from "lucide-react";
+import { ExternalLink, Shield, ShieldAlert, Pause, CheckCircle, XCircle, ArrowLeft, Copy, Check } from "lucide-react";
 
 interface TokenData {
   address: string;
@@ -97,6 +97,19 @@ export default function TokenPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [network, setNetwork] = useState("sepolia");
+  const [copied, setCopied] = useState(false);
+
+  const copyAddress = async () => {
+    await navigator.clipboard.writeText(token?.address || address);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const shareOnTwitter = () => {
+    const url = encodeURIComponent(`https://b20-explorer.vercel.app/token/${address}`);
+    const text = encodeURIComponent(`Check out this B20 token: ${token?.name} (${token?.symbol}) on Base`);
+    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank");
+  };
 
   useEffect(() => {
     if (!address) return;
@@ -181,6 +194,15 @@ export default function TokenPage() {
                   </span>
                 </div>
               </div>
+              <button
+                onClick={shareOnTwitter}
+                className="text-gray-500 hover:text-gray-300 transition-colors"
+                title="Share on Twitter"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </button>
               <a
                 href={`${explorerBase}/address/${token.address}`}
                 target="_blank"
@@ -191,8 +213,17 @@ export default function TokenPage() {
               </a>
             </div>
 
-            <div className="font-mono text-sm text-gray-400 bg-gray-800 rounded-lg px-3 py-2 break-all">
-              {token.address}
+            <div className="flex items-center gap-2">
+              <div className="font-mono text-sm text-gray-400 bg-gray-800 rounded-lg px-3 py-2 break-all flex-1">
+                {token.address}
+              </div>
+              <button
+                onClick={copyAddress}
+                className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+                title="Copy address"
+              >
+                {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
+              </button>
             </div>
           </div>
 
